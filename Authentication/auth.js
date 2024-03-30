@@ -64,18 +64,18 @@ export const rolebasedAuthentication = async (req, res, next) => {
       let token = req.headers.authorization.split(" ")[1];
       let data = await jwt.decode(token);
       if (Math.floor(+new Date() / 1000) < data.exp) {
-        if (data.role === "admin") {
+        if (data.data.role === 'admin') {
           next();
         } else {
-          res.status(404).json({ message: "Admin one use this page",rd: false });
+          res.status(404).send({ message: "Admin one use this page", rd:false });
         }
       } else {
-        res.status(401).json({ message: "Token Expired",rd: false, });
+        res.status(401).send({ message: "Token Expired", rd:false, });
       }
     } else {
-      res.status(400).json({ message: "Token not found",rd: false, });
+      res.status(400).send({ message: "Token not found", rd:false, });
     }
   } catch (error) {
-    res.status(400).send({ message: "Token not found",rd: false, });
+    res.status(400).send({ message: "Token not found", rd:false, });
   }
 };
