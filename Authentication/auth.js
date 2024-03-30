@@ -35,10 +35,10 @@ export const validate = async (req, res, next) => {
     if (Math.floor(+new Date() / 1000) < data.exp) {
       next();
     } else {
-      res.status(4001).send({ message: "Token Expired" });
+      res.status(401).json({ message: "Token Expired",rd: false  });
     }
   } else {
-    res.status(400).send({ message: "Token not found" });
+    res.status(400).json({ message: "Token not found",rd: false  });
   }
 };
 
@@ -64,7 +64,7 @@ export const rolebasedAuthentication = async (req, res, next) => {
       let token = req.headers.authorization.split(" ")[1];
       let data = await jwt.decode(token);
       if (Math.floor(+new Date() / 1000) < data.exp) {
-        if (data.role === admin) {
+        if (data.role === "admin") {
           next();
         } else {
           res.status(404).json({ message: "Admin one use this page",rd: false });
