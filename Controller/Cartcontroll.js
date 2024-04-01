@@ -28,20 +28,12 @@ export const createCart = async (req, res) => {
 //get One cart
 export const getcart = async (req, res) => {
   try {
-    let id = req.params.id;
-    const cart = await CartModule.find({},{userid: id, _id:1,
-      title:1,
-      description:1,
-      category:1,
-      image:1,
-      price:1,
-      rating:1,
-      numberofproduct:1,
-      userid:1,});
+    const cart = await CartModule.find({userid:req.params.id});
+    console.log(cart)
     if (cart) {
       res.status(200).json({ message: "get cart successful", cart, rd: true });
     } else {
-      res.status(404).json({ message: "cart Not matching", rd: false });
+      res.status(400).json({ message: "cart Data emtpy", rd: false });
     }
   } catch (error) {
     res
