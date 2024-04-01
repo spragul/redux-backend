@@ -76,11 +76,7 @@ export const Allorder= async (req, res) => {
 //get user orders
 export const oneOrder= async (req, res) => {
 try {
-  const orders = await OrderModel.find({},{ userId: req.params.userid ,
-    product:1,
-    isPaid:1,
-    razorpay:1
-  });
+  const orders = await OrderModel.find({ userId: req.params.userid});
   if(orders.length>0){
     res.status(200).json({message:"Orders List",orders,rd:true})
   }else{
